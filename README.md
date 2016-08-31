@@ -77,8 +77,6 @@ var field = (article as INews_Article).NewsArticleField; //This would generate a
 
 When an item is requested from Glass Factory, it will first pull out the Sitecore Item and check the template id, from there it will locate a concrete type that has an attribute with that template id. It will then use Glass Mapper to map all its properties to that type. Glass Factory will take that item and attempt to cast it as the interface provided in the generic paramater (assuming the concrete class inherits from the interface provided).
 
-### Solution 3: Getting Child Items
-
 
 ## Extra Methods
 ### Get Children
