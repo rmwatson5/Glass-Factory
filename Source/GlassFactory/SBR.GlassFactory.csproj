@@ -100,8 +100,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\GlassMapperSc.cs" />
-    <Compile Include="App_Start\GlassMapperScCustom.cs" />
     <Compile Include="Exceptions\NullDataSourceException.cs" />
     <Compile Include="ExtendedGlassView.cs" />
     <Compile Include="GlassFactory\GlassFactory.cs" />
@@ -109,6 +107,7 @@
     <Compile Include="GlassSpawn\GlassSpawn.cs" />
     <Compile Include="GlassSpawn\IGlassSpawn.cs" />
     <Compile Include="Helpers\GlassHelpers.cs" />
+    <Compile Include="Helpers\SitecoreHelpers.cs" />
     <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="IExtendedGlassView.cs" />
     <Compile Include="IRenderingModel.cs" />
@@ -117,11 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.config" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.Mvc.Config" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.Start.config" />
-    <None Include="App_Config\Include\z.Glass.Mapper.Sc.ViewRender.config.exclude" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

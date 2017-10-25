@@ -47,13 +47,14 @@ namespace SBR.GlassFactory
                     this.dataSource = this.GlassFactory.GetGlassItem<TDataSource>(dataSourceId);
                 }
 
-                if (this.dataSource == null && DataSourceRequired)
+                if (this.dataSource == null && this.DataSourceRequired)
                 {
                     throw new NullDataSourceException(typeof(TDataSource));
                 }
 
                 return this.dataSource;
             }
+            set { this.dataSource = value; }
         }
 
         public RenderingModel(bool dataSourceRequired = false)
@@ -65,7 +66,7 @@ namespace SBR.GlassFactory
     public class RenderingModel<TPageItem, TDataSource, TRenderingParamaters> : RenderingModel<TPageItem, TDataSource>, IRenderingModel<TPageItem, TDataSource, TRenderingParamaters>
         where TPageItem : class
         where TDataSource : class
-        where TRenderingParamaters: class
+        where TRenderingParamaters : class
     {
         private TRenderingParamaters renderingParamaters;
         public TRenderingParamaters RenderingParamaters
@@ -83,7 +84,7 @@ namespace SBR.GlassFactory
         }
 
         public RenderingModel(bool dataSourceRequired = false)
-            :base(dataSourceRequired)
+            : base(dataSourceRequired)
         {
         }
 
@@ -91,9 +92,9 @@ namespace SBR.GlassFactory
         {
             var sitecoreRenderingParamaters =
                 Sitecore.Web.WebUtil.ParseUrlParameters(this.Rendering["Parameters"]);
-            
+
             var glassSpawn = new GlassSpawn();
-            var assignableType = glassSpawn.GetAssignableType(typeof (TRenderingParamaters));
+            var assignableType = glassSpawn.GetAssignableType(typeof(TRenderingParamaters));
             var renderingParamatersItem = assignableType.CreateInstance<TRenderingParamaters>();
             var properties =
                 renderingParamatersItem.GetType()

@@ -7,6 +7,8 @@ using Glass.Mapper.Sc.Configuration.Attributes;
 
 namespace SBR.GlassFactory
 {
+    using Sitecore.Mvc.Extensions;
+
     public class GlassSpawn : IGlassSpawn
     {
         protected static IEnumerable<Type> GlassTypes;
@@ -18,12 +20,23 @@ namespace SBR.GlassFactory
                 this.LoadGlassTypes();
             }
 
-            return GlassTypes.FirstOrDefault(t => IsCorrectType(t, templateId));
+            return GlassTypes.FirstOrDefault(t => this.IsCorrectType(t, templateId));
         }
 
         public Type GetAssignableType(Type interfaceType)
         {
-            return GlassTypes.FirstOrDefault(t => interfaceType.IsAssignableFrom(t) && IsGlassType(t));
+            return GlassTypes.FirstOrDefault(t => interfaceType.IsAssignableFrom(t) && this.IsGlassType(t));
+        }
+
+        public Guid GetTemplateIdFromType(Type interfaceType)
+        {
+            var sitecoreTypeAttribute = Attribute.GetCustomAttribute(interfaceType, typeof(SitecoreTypeAttribute)) as SitecoreTypeAttribute;
+            if (string.IsNullOrWhiteSpace(sitecoreTypeAttribute?.TemplateId))
+            {
+                return Guid.Empty;
+            }
+
+            return sitecoreTypeAttribute.TemplateId.ToGuid();
         }
 
         protected void LoadGlassTypes()
@@ -35,15 +48,8 @@ namespace SBR.GlassFactory
 
         protected bool IsCorrectType(Type t, Guid templateId)
         {
-            var sitecoreTypeAttribute = Attribute.GetCustomAttribute(t, typeof(SitecoreTypeAttribute)) as SitecoreTypeAttribute;
-            if (string.IsNullOrWhiteSpace(sitecoreTypeAttribute?.TemplateId))
-            {
-                return false;
-            }
-
-            return sitecoreTypeAttribute.TemplateId
-                .Equals(
-                    templateId.ToString(), StringComparison.InvariantCultureIgnoreCase);
+            var matchedTemplateId = this.GetTemplateIdFromType(t);
+            return matchedTemplateId.Equals(templateId);
         }
 
         protected bool IsGlassType(Type t)

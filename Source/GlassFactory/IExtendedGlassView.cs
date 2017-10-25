@@ -9,7 +9,7 @@
     public interface IExtendedGlassView<out TPageItem, out TDataSource> : IExtendedGlassView<TPageItem>
         where TPageItem : class
     {
-           TDataSource DataSource { get; }
+        TDataSource DataSource { get; }
     }
 
     public interface IExtendedGlassView<out TPageItem, out TDataSource, out TRenderingParamaters> : IExtendedGlassView<TPageItem, TDataSource>
